@@ -1,2 +1,3 @@
-# Tree_Family
-The implement of AVL, RBTree, Splay and Treap.
+# TreeFamily
+
+The implement of BST, AVL, RBTree, Splay and Treap.
