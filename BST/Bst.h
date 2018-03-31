@@ -1,7 +1,7 @@
 #ifndef _BST_H_
 #define _BST_H_
 
-#include "Utility/Tree_utility.h"
+#include "../Utility/Tree_utility.h"
 
 namespace treefamily {
 
@@ -14,19 +14,22 @@ namespace treefamily {
 			T      data_;
 			Tree   left_;
 			Tree   right_;
-		}
+		};
 
 		Bst() : root_(nullptr) {}
 		~Bst();
-		Bst(const Bst&)  = delete;
+		Bst(const Bst&) = delete;
 		Bst(const Bst&&) = delete;
-		Bst& operator=(Bst& ) = delete;
+		Bst& operator=(Bst&) = delete;
 		Bst& operator=(Bst&&) = delete;
 
-		Tree Find(T data) const;
-		Tree Insert(T data);
-		void Delete(T data);
+		Tree Find(const T data) const;
+		Tree Insert(const T data);
+		void Delete(const T data);
 		void Clear();
+
+		void Prelist()  const;
+		void Postlist() const;
 
 	private:
 		Tree root_;
@@ -39,13 +42,13 @@ namespace treefamily {
 	}
 
 	template<typename T>
-	Bst<T>::Tree Bst<T>::Find(T data) const
+	typename Bst<T>::Tree Bst<T>::Find(const T data) const
 	{
 		return find_node(root_, data);
 	}
 
 	template<typename T>
-	Bst<T>::Tree Bst<T>::Insert(T data)
+	typename Bst<T>::Tree Bst<T>::Insert(const T data)
 	{
 		Tree& pos = find_node(root_, data);
 		if (pos == nullptr) {
@@ -57,19 +60,19 @@ namespace treefamily {
 	}
 
 	template<typename T>
-	void Bst<T>::Delete(T data)
+	void Bst<T>::Delete(const T data)
 	{
 		Tree& pos = find_node(root_, data);
 		if (pos == nullptr)
 			return;
-		
+
 		if (pos->right_ == nullptr) {
 			Tree del = pos;
 			pos = pos->right_;
 			delete del;
-		} 
+		}
 		else {
-			min = find_min(pos->right_);
+			Tree& min = find_min(pos->right_);
 			pos->data_ = min->data_;
 			Tree del = min;
 			min = min->right_;
@@ -81,6 +84,19 @@ namespace treefamily {
 	void Bst<T>::Clear()
 	{
 		clear_tree(root_);
+		root_ = nullptr;
+	}
+
+	template<typename T>
+	void Bst<T>::Prelist() const
+	{
+		preorder_traversal(root_);
+	}
+
+	template<typename T>
+	void Bst<T>::Postlist() const
+	{
+		postorder_traversal(root_);
 	}
 
 }
