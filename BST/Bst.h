@@ -68,7 +68,7 @@ namespace treefamily {
 
 		if (pos->right_ == nullptr) {
 			Tree del = pos;
-			pos = pos->right_;
+			pos = pos->left_;
 			delete del;
 		}
 		else {
